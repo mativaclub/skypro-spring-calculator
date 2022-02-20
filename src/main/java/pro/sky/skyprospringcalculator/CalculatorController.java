@@ -35,14 +35,15 @@ public class CalculatorController {
     }
 
     @GetMapping(path = "/divide")
-    public String divide(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
+    public String divide(@RequestParam("num1") Integer num1, @RequestParam("num2") Integer num2) {
+        if (num2 == 0) {
+            return "Division by 0 is not possible";
+        }
+        if (num1 == null || num2 == null) {
+            return "Can't proceed without a number";
+        }
         return calculatorService.divide(num1, num2);
     }
-
-//    @GetMapping(path = "/divide")
-//    public String divide(@RequestParam("num1") int num1, @RequestParam("num2") int num2) {
-//        return calculatorService.divide(num1, num2);
-//    }
 
 
 
