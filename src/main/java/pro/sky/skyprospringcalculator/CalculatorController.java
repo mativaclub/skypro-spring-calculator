@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping(path = "/calculator")
 public class CalculatorController {
     private final CalculatorService calculatorService;
 
@@ -14,7 +14,7 @@ public class CalculatorController {
         this.calculatorService = calculatorService;
     }
 
-    @GetMapping(path = "/calculator")
+    @GetMapping()
     public String welcome() {
         return calculatorService.welcome();
     }
@@ -35,12 +35,12 @@ public class CalculatorController {
     }
 
     @GetMapping(path = "/divide")
-    public String divide(@RequestParam("num1") Integer num1, @RequestParam("num2") Integer num2) {
-        if (num2 == 0) {
-            return "Division by 0 is not possible";
-        }
+    public String divide(@RequestParam(name="num1", required=false) Integer num1, @RequestParam("num2") Integer num2) {
         if (num1 == null || num2 == null) {
             return "Can't proceed without a number";
+        }
+        if (num2 == 0) {
+            return "Division by 0 is not possible";
         }
         return calculatorService.divide(num1, num2);
     }
